@@ -31,6 +31,10 @@ function getIngredients() {
 
   return new Promise((resolve, reject) => {
     // Your code here
+    showMessage("Gathering ingredients...");
+    wait(2000).then(() =>(
+    resolve("Ingredients ready"))
+    )
   });
 }
 
@@ -44,7 +48,18 @@ function blendSmoothie() {
 
   return new Promise((resolve, reject) => {
     // Your code here
-  });
+    showMessage("Blending smoothie...");
+    wait(3000).then(() =>{
+    if(Math.random()<0.33)
+    {
+      reject("ERROR: Blender Broke!");
+    }
+    else
+    {
+      resolve("Smoothie blended");
+    }
+  })
+});
 }
 
 // Step 3: Pour smoothie
@@ -56,6 +71,9 @@ function pourSmoothie() {
 
   return new Promise((resolve, reject) => {
     // Your code here
+    showMessage("Pouring into cup...");
+    wait(1000).then(() =>
+    resolve("Smoothie is ready!"));
   });
 }
 
@@ -65,13 +83,20 @@ function pourSmoothie() {
 
 function makeSmoothieWithPromises() {
   outputDiv.innerHTML = ""; // Clear previous messages
-
+  //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises used this website for this part 
   // TODO: Chain the steps in order using .then()
   // getIngredients()
   //   .then(...)
   //   .then(...)
   //   .then(...)
   //   .catch(...)
+  getIngredients() 
+    .then((result) => {showMessage(result); return blendSmoothie();})
+    .then((result) => {showMessage(result); return pourSmoothie();})
+    .then((result) => {showMessage(result); })
+    .catch(error=> {showMessage(error);})
+    button.addEventListener("click", makeSmoothieWithPromises);
+
 }
 
 /* =========================
@@ -88,4 +113,24 @@ async function makeSmoothieAsync() {
   // await pourSmoothie()
   // Show final success message
   // Catch and display any errors
+
+  try 
+  {
+    const ingredients = await getIngredients();
+    showMessage(ingredients);
+
+    const blended = await blendSmoothie();
+    showMessage(blended);
+
+    const poured = await pourSmoothie();
+    showMessage(poured);
+
+  } 
+  catch (error) 
+  {
+    showMessage(error);
+  }
+  
+
 }
+button.addEventListener("click", makesmoothie);
