@@ -32,7 +32,7 @@ function getIngredients() {
   return new Promise((resolve, reject) => {
     // Your code here
     showMessage("Gathering ingredients...");
-    wait(2000).then(() =>(
+    wait(1000).then(() =>(
     resolve("Ingredients ready"))
     )
   });
@@ -49,7 +49,7 @@ function blendSmoothie() {
   return new Promise((resolve, reject) => {
     // Your code here
     showMessage("Blending smoothie...");
-    wait(3000).then(() =>{
+    wait(1000).then(() =>{
     if(Math.random()<0.33)
     {
       reject("ERROR: Blender Broke!");
@@ -133,4 +133,4 @@ async function makeSmoothieAsync() {
   
 
 }
-button.addEventListener("click", makesmoothie);
+button.addEventListener("click", makeSmoothieAsync);
